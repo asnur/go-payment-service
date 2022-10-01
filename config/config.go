@@ -1,6 +1,11 @@
 package config
 
-import "os"
+import (
+	"go-payment-service/exception"
+	"os"
+
+	"github.com/joho/godotenv"
+)
 
 type Config interface {
 	Get(key string) string
@@ -13,5 +18,8 @@ func (config *configList) Get(key string) string {
 }
 
 func New(filesname ...string) Config {
+	err := godotenv.Load(filesname...)
+	exception.PanicIfNeeded(err)
+
 	return &configList{}
 }

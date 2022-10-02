@@ -1,13 +1,27 @@
 package main
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"go-payment-service/config"
+	"go-payment-service/controllers"
+	"go-payment-service/repository"
+	"go-payment-service/services"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func main() {
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
-	})
+	configuration := config.New()
+	database := config.NewMysqlDatabase(configuration)
+
+	roomRepository := repository.NewRoomRepositoryImpl(database)
+
+	roomService := services.NewRoomServiceImpl(&roomRepository)
+
+	roomController := controllers.NewRoomController(&roomService)
+
+	roomController.Route(app)
 
 	app.Listen(":3000")
 }

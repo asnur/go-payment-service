@@ -3,6 +3,7 @@ package controllers
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"go-payment-service/models"
 	"net/http/httptest"
 	"testing"
@@ -22,6 +23,17 @@ func TestCreateRoom(t *testing.T) {
 
 	response, err := app.Test(request)
 
+	assert.Nil(t, err)
+	assert.Equal(t, 200, response.StatusCode)
+}
+
+func TestGetAllRoom(t *testing.T) {
+	request := httptest.NewRequest("GET", "/room", nil)
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Accept", "application/json")
+
+	response, err := app.Test(request)
+	fmt.Println(response.Body)
 	assert.Nil(t, err)
 	assert.Equal(t, 200, response.StatusCode)
 }

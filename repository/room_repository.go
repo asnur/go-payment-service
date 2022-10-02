@@ -15,7 +15,7 @@ type RoomRepositoryImpl struct {
 	Query *gorm.DB
 }
 
-func NewRoomRepositoryImpl(query *gorm.DB) *RoomRepositoryImpl {
+func NewRoomRepositoryImpl(query *gorm.DB) RoomRepository {
 	return &RoomRepositoryImpl{Query: query}
 }
 

@@ -9,15 +9,15 @@ import (
 type RoomService interface {
 	Create(request models.Room) (response models.Room)
 	GetAll() (response []models.Room)
-	Booking(ID int64) (response models.Room)
+}
+
+func NewRoomServiceImpl(roomRepository *repository.RoomRepository) RoomService {
+	return &RoomServiceImpl{RoomRepository: *roomRepository}
+
 }
 
 type RoomServiceImpl struct {
 	RoomRepository repository.RoomRepository
-}
-
-func NewRoomServiceImpl(roomRepository repository.RoomRepository) *RoomServiceImpl {
-	return &RoomServiceImpl{RoomRepository: roomRepository}
 }
 
 func (service *RoomServiceImpl) Create(request models.Room) (response models.Room) {

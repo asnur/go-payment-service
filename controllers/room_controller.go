@@ -11,8 +11,13 @@ type RoomController struct {
 	RoomService services.RoomService
 }
 
-func NewRoomController(roomService services.RoomService) *RoomController {
-	return &RoomController{RoomService: roomService}
+func NewRoomController(roomService *services.RoomService) RoomController {
+	return RoomController{RoomService: *roomService}
+}
+
+func (controller *RoomController) Route(app *fiber.App) {
+	app.Post("/room", controller.Create)
+	app.Get("/room", controller.GetAll)
 }
 
 func (controller *RoomController) Create(c *fiber.Ctx) error {

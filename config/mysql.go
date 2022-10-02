@@ -12,7 +12,7 @@ func NewMysqlDatabase(configuration Config) *gorm.DB {
 	db, err := gorm.Open(mysql.Open(configuration.Get("DSN_MYSQL")), &gorm.Config{})
 	exception.PanicIfNeeded(err)
 
-	db.AutoMigrate(&e.Room{})
+	db.AutoMigrate(&e.Room{}, &e.Booking{})
 
 	return db
 }
